@@ -33,7 +33,7 @@ A **Student Enrollment System** — a practical project demonstrating full **CRU
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/batestelgreg/Greg_CRUDV2.git
    ```
 2. Open the solution file `Greg_CRUDV2.slnx` in Visual Studio.
 3. Restore/attach the `Montebon` database to your local SQL Server Express instance.

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Montebon" Class="GregDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=Montebon;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="Greg_CRUDV2.Properties.Settings" SettingsPropertyName="MontebonConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Courses" Member="Courses">
+    <Type Name="Course">
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTitle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Units" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Section" Member="Sections" ThisKey="CourseID" OtherKey="CourseID" Type="Section" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Students" Member="Students">
+    <Type Name="Student">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StudentNo" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="YearLevel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Enrollment" Member="Enrollments" ThisKey="StudentID" OtherKey="StudentID" Type="Enrollment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Enrollments" Member="Enrollments">
+    <Type Name="Enrollment">
+      <Column Name="EnrollmentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SectionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnrollmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EnrollmentStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Enrollment_Grade" Member="Grades" ThisKey="EnrollmentID" OtherKey="EnrollmentID" Type="Grade" />
+      <Association Name="Student_Enrollment" Member="Student" ThisKey="StudentID" OtherKey="StudentID" Type="Student" IsForeignKey="true" />
+      <Association Name="Section_Enrollment" Member="Section" ThisKey="SectionID" OtherKey="SectionID" Type="Section" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Grades" Member="Grades">
+    <Type Name="Grade">
+      <Column Name="GradeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EnrollmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Midterm" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="Final" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="FinalGrade" Type="System.Decimal" DbType="Decimal(11,6)" IsDbGenerated="true" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Remarks" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Enrollment_Grade" Member="Enrollment" ThisKey="EnrollmentID" OtherKey="EnrollmentID" Type="Enrollment" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sections" Member="Sections">
+    <Type Name="Section">
+      <Column Name="SectionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SectionCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="InstructorName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Room" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduleText" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Section_Enrollment" Member="Enrollments" ThisKey="SectionID" OtherKey="SectionID" Type="Enrollment" />
+      <Association Name="Course_Section" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.usp_Course_CRUD" Method="usp_Course_CRUD">
+    <Parameter Name="Action" Parameter="action" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CourseID" Parameter="courseID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CourseCode" Parameter="courseCode" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="CourseTitle" Parameter="courseTitle" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Units" Parameter="units" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_Course_CRUDResult">
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTitle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Units" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_StudentGradeReport_Get" Method="usp_StudentGradeReport_Get">
+    <Parameter Name="StudentID" Parameter="studentID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SectionID" Parameter="sectionID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_StudentGradeReport_GetResult">
+      <Column Name="EnrollmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentNo" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="YearLevel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTitle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="SectionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SectionCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="InstructorName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="EnrollmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EnrollmentStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Midterm" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="Final" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="FinalGrade" Type="System.Decimal" DbType="Decimal(11,6)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Enrollment_Create" Method="usp_Enrollment_Create">
+    <Parameter Name="StudentID" Parameter="studentID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SectionID" Parameter="sectionID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Enrollment_Drop" Method="usp_Enrollment_Drop">
+    <Parameter Name="EnrollmentID" Parameter="enrollmentID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Grade_Save" Method="usp_Grade_Save">
+    <Parameter Name="EnrollmentID" Parameter="enrollmentID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Midterm" Parameter="midterm" Type="System.Decimal" DbType="Decimal(5,2)" />
+    <Parameter Name="Final" Parameter="final" Type="System.Decimal" DbType="Decimal(5,2)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Student_CRUD" Method="usp_Student_CRUD">
+    <Parameter Name="Action" Parameter="action" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="StudentID" Parameter="studentID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="StudentNo" Parameter="studentNo" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="MiddleName" Parameter="middleName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="YearLevel" Parameter="yearLevel" Type="System.Int32" DbType="Int" />
+    <Parameter Name="StudentStatus" Parameter="studentStatus" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="SearchKeyword" Parameter="searchKeyword" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_Student_CRUDResult">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentNo" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="YearLevel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentStatus" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Section_CRUD" Method="usp_Section_CRUD">
+    <Parameter Name="Action" Parameter="action" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="SectionID" Parameter="sectionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CourseID" Parameter="courseID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SectionCode" Parameter="sectionCode" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="InstructorName" Parameter="instructorName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Room" Parameter="room" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Capacity" Parameter="capacity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ScheduleText" Parameter="scheduleText" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_Section_CRUDResult">
+      <Column Name="SectionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SectionCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="InstructorName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Room" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduleText" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseCode" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTitle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>

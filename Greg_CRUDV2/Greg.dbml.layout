@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 8.5" name="Greg">
+  <DataContextMoniker Name="/GregDataContext" />
+  <nestedChildShapes>
+    <classShape Id="4779a3cb-1a5e-44e0-94ca-4169305c99dc" absoluteBounds="0.75, 1.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/GregDataContext/Course" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7592c438-8f8b-4a19-843a-4658e2ac0859" absoluteBounds="0.765, 1.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bbd22573-cb46-4954-a367-140c670dfa13" absoluteBounds="3.5, 4.875, 2, 2.3478011067708326">
+      <DataClassMoniker Name="/GregDataContext/Student" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1753bd7b-0894-43df-b3e6-050db8f970af" absoluteBounds="3.515, 5.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5178747f-5c83-4c6f-b8e4-49e87518f346" absoluteBounds="6.25, 1.125, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/GregDataContext/Enrollment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2ce3c4b2-2fa1-4bd9-9eec-966cc78ca019" absoluteBounds="6.265, 1.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a7fde5c6-40c9-42a3-8131-13ca5ed23f4d" absoluteBounds="9, 1, 2, 1.9631982421875003">
+      <DataClassMoniker Name="/GregDataContext/Grade" />
+      <nestedChildShapes>
+        <elementListCompartment Id="72c5c49f-6d2b-4e94-8416-7b8a4a896e19" absoluteBounds="9.015, 1.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="968e4395-d1dc-4f2a-a021-bd7ee5af89e9" absoluteBounds="8.125, 4, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/GregDataContext/Section" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b87d9af4-98f9-4f51-a7dd-fb26cbd9eb6a" absoluteBounds="8.14, 4.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 6.04890055338542); (7.25 : 6.04890055338542); (7.25 : 2.89589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/GregDataContext/Student/Student_Enrollment" />
+      <nodes>
+        <classShapeMoniker Id="bbd22573-cb46-4954-a367-140c670dfa13" />
+        <classShapeMoniker Id="5178747f-5c83-4c6f-b8e4-49e87518f346" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 2.01044840494792); (9 : 2.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/GregDataContext/Enrollment/Enrollment_Grade" />
+      <nodes>
+        <classShapeMoniker Id="5178747f-5c83-4c6f-b8e4-49e87518f346" />
+        <classShapeMoniker Id="a7fde5c6-40c9-42a3-8131-13ca5ed23f4d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.125 : 5.02445027669271); (7.33333333333333 : 5.02445027669271 : JumpStart); (7.16666666666667 : 5.02445027669271 : JumpEnd); (6.7187475 : 5.02445027669271); (6.7187475 : 2.89589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/GregDataContext/Section/Section_Enrollment" />
+      <nodes>
+        <classShapeMoniker Id="968e4395-d1dc-4f2a-a021-bd7ee5af89e9" />
+        <classShapeMoniker Id="5178747f-5c83-4c6f-b8e4-49e87518f346" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 2.82859537760417); (1.75 : 4.40625); (6.63541416666667 : 4.40625 : JumpStart); (6.80208083333333 : 4.40625 : JumpEnd); (7.16666666666667 : 4.40625 : JumpStart); (7.33333333333333 : 4.40625 : JumpEnd); (8.125 : 4.40625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/GregDataContext/Course/Course_Section" />
+      <nodes>
+        <classShapeMoniker Id="4779a3cb-1a5e-44e0-94ca-4169305c99dc" />
+        <classShapeMoniker Id="968e4395-d1dc-4f2a-a021-bd7ee5af89e9" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
